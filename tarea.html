@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animacion de Gol</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, #4a90c4 0%, #87ceeb 70%, #a8d5a2 100%);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .campo {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 180px;
+      background: #2d8a3e;
+    }
+    .porteria {
+      position: absolute;
+      top: 0; left:30%;
+      transform: translateX(-50%);
+      width: 220px; height: 120px;
+      border: 6px solid white;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      z-index: 3;
+    }
+    .porteria::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:repeating-linear-gradient(0deg,   rgba(255,255,255,.3) 0 1px, transparent 1px 15px),repeating-linear-gradient(90deg,  rgba(255,255,255,.3) 0 1px, transparent 1px 15px);
+      animation: vibrar .1s ease-in-out 2.55s 6 alternate;
+    }
+    @keyframes vibrar {
+      0%   { transform: skewX(0);     }
+      50%  { transform: skewX(-4deg); }
+      100% { transform: skewX(0);     }
+    }
+    .porteria:hover::after {
+      background:
+        repeating-linear-gradient(0deg,   rgba(255,255,200,.6) 0 1px, transparent 1px 15px),
+        repeating-linear-gradient(90deg,  rgba(255,255,200,.6) 0 1px, transparent 1px 15px);
+    }
+    .pelota {
+      position: absolute;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff, #aaa);
+      box-shadow: inset -5px -5px 10px rgba(0,0,0,.3);
+      bottom: 20px;
+      left: 40px;
+      z-index: 5;
+      animation: patear 3s ease-in-out forwards;
+    }
+    @keyframes patear {
+      0%   { left: 40px;  bottom: 20px; transform: rotate(0deg)   scale(1);   }
+      30%  { left: 180px; bottom: 70px; transform: rotate(200deg) scale(.9);  }
+      60%  { left: 310px; bottom: 95px; transform: rotate(450deg) scale(.75); }
+      85%  { left: 390px; bottom: 75px; transform: rotate(650deg) scale(.65); }
+      100% { left: 380px; bottom: 68px; transform: rotate(720deg) scale(.65); }
+    }
+    .jugador {
+      position: absolute;
+      bottom: 14px;
+      left: 20px;
+      width: 20px;
+      height: 50px;
+      background: #e63946;
+      border-radius: 6px 6px 3px 3px;
+      z-index: 4;
+      animation: correr 3s ease-out forwards;
+    }
+    .jugador::before {
+      content: '';
+      position: absolute;
+      top: -22px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #c68642;
+      border-radius: 50%;
+    }
+    @keyframes correr {
+      0%   { left: 20px;  transform: rotate(0);      }
+      40%  { left: 100px; transform: rotate(0);      }
+      58%  { left: 130px; transform: rotate(-20deg); }
+      75%  { left: 145px; transform: rotate(10deg);  }
+      100% { left: 155px; transform: rotate(0);      }
+    }
+    .texto-gol {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 18vw, 9rem);
+      color: #f5c518;
+      text-shadow: 4px 4px 0 #b8920e, -2px -2px 0 #7a5c00;
+      letter-spacing: .06em;
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      opacity: 0;
+      animation: aparecer .6s cubic-bezier(.2,1.5,.5,1) 2.64s forwards;
+    }
+    @keyframes aparecer {
+      0%   { opacity: 0; transform: translateX(-50%) scale(0);    }
+      70%  { opacity: 1; transform: translateX(-50%) scale(1.15); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1);    }
+    }
+    .riniciar {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .1em;
+    }
+  </style>
+</head>
+<body>
+  <div style="position:relative; width:100%; height:100vh;" onclick="location.reload()">
+    <div class="texto-gol">¡GOL!</div>
+    <div class="campo">
+      <div class="porteria"></div>
+      <div class="pelota"></div>
+      <div class="jugador"></div>
+    </div>
+    <p class="reiniciar">Clic para repetir</p>
+  </div>
+
+</body>
+</html>
